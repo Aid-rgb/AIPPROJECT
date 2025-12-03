@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Harley-Davidson</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">Harley-Davidson</div>
+
+    <div class="burger" onclick="toggleMenu()">☰</div>
+
+    <div class="menu" id="menu">
+        <a href="/">Главная</a>
+        <a href="/sportster">Sportster</a>
+        <a href="/softail">Softail</a>
+        <a href="/touring">Touring</a>
+    </div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="container">
+    <div class="card">
+        <h1>Harley-Davidson Motorcycles</h1>
+        <p>
+            Harley-Davidson — это легендарный американский производитель мотоциклов,
+            основанный в 1903 году. Бренд является символом свободы, скорости и
+            индивидуальности.
+        </p>
+
+        <p>
+            Сегодня компания выпускает городские, круизерные и туристические мотоциклы,
+            оснащённые мощными двигателями Milwaukee-Eight и передовыми технологиями.
+        </p>
+
+        <p>
+            Выберите интересующую модель в меню сверху, чтобы узнать подробные характеристики.
+        </p>
+    </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+function toggleMenu() {
+    document.getElementById("menu").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
