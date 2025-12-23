@@ -1,42 +1,81 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title><%= type %></title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
+<header>
     <div class="logo">Harley-Davidson</div>
-
     <div class="burger" onclick="toggleMenu()">☰</div>
 
-    <div class="menu" id="menu">
-        <a href="/">Главная</a>
-        <a href="/sportster">Sportster</a>
-        <a href="/softail">Softail</a>
-        <a href="/touring">Touring</a>
+<nav class="menu" id="menu">
+    <a href="/">Главная</a>
+    <a href="/sportster">Sportster</a>
+    <a href="/softail">Softail</a>
+    <a href="/touring">Touring</a>
+
+    <% if (!user) { %>
+        <a href="/login">Вход</a>
+        <a href="/register">Регистрация</a>
+    <% } else { %>
+        <a href="/purchase">Покупка</a>
+        <a href="/logout">Выход</a>
+    <% } %>
+</nav>
+
+</header>
+
+<main class="bike-page"> <h1><%= type.toUpperCase() %></h1>
+    <img src="/images/<%= type %>.jpg" alt="<%= type %>">
+
+    <div class="bike-text">
+        <% if (type === "sportster") { %>
+            <p>
+                Серия Sportster — одна из самых динамичных и манёвренных
+                линеек Harley-Davidson. Эти мотоциклы отличаются
+                компактными размерами, небольшим весом и отличной
+                управляемостью.
+            </p>
+            <p>
+                Sportster идеально подходит для городских поездок,
+                начинающих мотоциклистов и тех, кто ценит
+                агрессивный стиль и простоту конструкции.
+            </p>
+        <% } %>
+
+        <% if (type === "softail") { %>
+            <p>
+                Softail сочетает в себе классический внешний вид
+                хардтейла и современные технологии подвески.
+                Эти мотоциклы выглядят брутально, но при этом
+                обеспечивают высокий уровень комфорта.
+            </p>
+            <p>
+                Серия Softail отлично подходит для повседневной езды,
+                путешествий и кастомизации под индивидуальный стиль.
+            </p>
+        <% } %>
+
+        <% if (type === "touring") { %>
+            <p>
+                Touring — это флагманская серия Harley-Davidson,
+                созданная для дальних поездок.
+                Большие размеры, мощные двигатели и максимальный комфорт —
+                главные особенности этой линейки.
+            </p>
+            <p>
+                Touring выбирают опытные райдеры, которые проводят
+                много времени в дороге и ценят удобство,
+                надёжность и технологии.
+            </p>
+        <% } %>
     </div>
-</div>
 
-<!-- КАРТОЧКА БАЙКА -->
-<div class="container">
-    <div class="card">
-        <h1><%= title %></h1>
-
-        <img src="<%= picture %>">
-
-        <p><b>Тип:</b> <%= type %></p>
-        <p><b>Двигатель:</b> <%= engine %></p>
-        <p><b>Мощность:</b> <%= power %> л.с.</p>
-        <p><b>Вес:</b> <%= weight %> кг</p>
-        <p><b>Год:</b> <%= year %></p>
-
-        <p style="margin-top:20px;"><%= desc %></p>
-    </div>
-</div>
+</main>
 
 <script>
 function toggleMenu() {

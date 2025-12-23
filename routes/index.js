@@ -1,50 +1,88 @@
 const express = require("express");
 const router = express.Router();
 
+const Bike = require("../models/Bike");
+const User = require("../models/User");
+
 // Главная
-router.get("/", (req, res) => {
-    res.render("index", { title: "Harley-Davidson Motorcycles" });
+router.get("/", async (req, res) => {
+    res.render("index");
 });
 
-// Sportster
-router.get("/sportster", (req, res) => {
-    res.render("bike", {
-        title: "Harley-Davidson Sportster",
-        picture: "/images/sportster.jpg",
-        type: "Городской байк",
-        engine: "V-Twin 1250 см³",
-        power: 121,
-        weight: 228,
-        year: 2023,
-        desc: "Sportster — это динамичный городской мотоцикл, созданный для манёвренной езды, сочетает агрессивный дизайн и отличную управляемость."
+// Страницы байков
+router.get("/bikes/:type", async (req, res) => {
+    const bikes = await Bike.find({ type: req.params.type });
+    res.render("bikes", { bikes, type: req.params.type });
+});
+
+// Покупка
+router.get("/purchase", async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    const bikes = await Bike.find();
+    res.render("purchase", { bikes });
+});
+
+// КУПИТЬ — ВАЖНО
+router.post("/buy/:id", async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    const bike = await Bike.findById(req.params.id);
+    res.render("purchase-success", { bike });
+});
+
+// Регистрация
+router.get("/register", (req, res) => {
+    res.render("register");
+});
+
+router.post("/register", async (req, res) => {
+    const { username, email, password } = req.body;
+
+    if (
+        !email.includes("@") ||
+        !(email.endsWith(".com") || email.endsWith(".ru"))
+    ) {
+        return res.render("register", { error: "Некорректный email" });
+    }
+
+    if (password.length < 8) {
+        return res.render("register", { error: "Пароль минимум 8 символов" });
+    }
+
+    const user = new User({ username, email, password });
+    await user.save();
+
+    res.redirect("/login");
+});
+
+// Вход
+router.get("/login", (req, res) => {
+    res.render("login");
+});
+
+router.post("/login", async (req, res) => {
+    const user = await User.findOne({
+        email: req.body.email,
+        password: req.body.password
     });
+
+    if (!user) {
+        return res.render("login", { error: "Неверные данные" });
+    }
+
+    req.session.user = user;
+    res.redirect("/purchase");
 });
 
-// Softail
-router.get("/softail", (req, res) => {
-    res.render("bike", {
-        title: "Harley-Davidson Softail",
-        picture: "/images/softail.jpg",
-        type: "Круизер",
-        engine: "Milwaukee-Eight 1870 см³",
-        power: 155,
-        weight: 304,
-        year: 2024,
-        desc: "Softail сочетает в себе классический внешний вид Harley-Davidson и современные технологии, обеспечивая комфортную езду на дальние расстояния."
-    });
-});
-
-// Touring
-router.get("/touring", (req, res) => {
-    res.render("bike", {
-        title: "Harley-Davidson Touring",
-        picture: "/images/touring.jpg",
-        type: "Туристический мотоцикл",
-        engine: "Milwaukee-Eight 1868 см³",
-        power: 158,
-        weight: 390,
-        year: 2024,
-        desc: "Серия Touring предназначена для дальних путешествий, оснащена комфортным сиденьем, кофрами и современной электроникой."
+// Выход
+router.get("/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/");
     });
 });
 

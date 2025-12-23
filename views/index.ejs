@@ -1,48 +1,63 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Harley-Davidson</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
+<header>
     <div class="logo">Harley-Davidson</div>
-
     <div class="burger" onclick="toggleMenu()">☰</div>
 
-    <div class="menu" id="menu">
-        <a href="/">Главная</a>
-        <a href="/sportster">Sportster</a>
-        <a href="/softail">Softail</a>
-        <a href="/touring">Touring</a>
-    </div>
-</div>
+```
+<nav class="menu" id="menu">
+    <a href="/">Главная</a>
+    <a href="/sportster">Sportster</a>
+    <a href="/softail">Softail</a>
+    <a href="/touring">Touring</a>
 
-<!-- ОСНОВНОЙ КОНТЕНТ -->
-<div class="container">
-    <div class="card">
-        <h1>Harley-Davidson Motorcycles</h1>
-        <p>
-            Harley-Davidson — это легендарный американский производитель мотоциклов,
-            основанный в 1903 году. Бренд является символом свободы, скорости и
-            индивидуальности.
-        </p>
+    <% if (!user) { %>
+        <a href="/login">Вход</a>
+        <a href="/register">Регистрация</a>
+    <% } else { %>
+        <a href="/purchase">Покупка</a>
+        <a href="/logout">Выход</a>
+    <% } %>
+</nav>
+```
 
-        <p>
-            Сегодня компания выпускает городские, круизерные и туристические мотоциклы,
-            оснащённые мощными двигателями Milwaukee-Eight и передовыми технологиями.
-        </p>
+</header>
 
-        <p>
-            Выберите интересующую модель в меню сверху, чтобы узнать подробные характеристики.
-        </p>
-    </div>
-</div>
+<main class="hero">
+    <h1>Legendary American Motorcycles</h1>
+    <p>
+        Harley-Davidson — это легендарный американский бренд мотоциклов,
+        основанный в 1903 году. На протяжении более чем ста лет компания
+        олицетворяет свободу, независимость и дух дороги.
+    </p>
 
-<!-- SCRIPT -->
+    <p>
+        Мотоциклы Harley-Davidson известны своим уникальным дизайном,
+        мощными двигателями V-Twin и неповторимым звуком.
+        Они создаются не просто как транспорт, а как стиль жизни.
+    </p>
+
+    <p>
+        В нашем каталоге представлены основные линейки мотоциклов:
+        Sportster, Softail и Touring. Каждая серия обладает
+        своими особенностями и предназначена для разных типов райдеров.
+    </p>
+
+    <p>
+        Ознакомьтесь с моделями, выберите подходящий мотоцикл и
+        оформите покупку через личный кабинет.
+    </p>
+</main>
+
 <script>
 function toggleMenu() {
     document.getElementById("menu").classList.toggle("active");
